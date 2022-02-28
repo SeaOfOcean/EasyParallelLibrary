@@ -47,11 +47,6 @@ cwd = os.path.dirname(os.path.abspath(__file__))
 cc_path = os.path.join(cwd, "cc")
 
 
-class BinaryDistribution(Distribution):
-  """This class is needed in order to create OS specific wheels."""
-  def has_ext_modules(self):
-    return True
-
 def build_clean():
   """build clean."""
   subprocess.check_call(["make", "clean"], cwd=cc_path)
@@ -81,13 +76,12 @@ class EplClean(DistutilsCommand):
     build_clean()
 
 setup(
-    name='epl',
+    name='pyepl',
     version=VERSION,
     packages=PACKAGES,
     include_package_data=True,
     package_data=PACKAGE_DATA,
     package_dir={"": "python"},
-    distclass=BinaryDistribution,
     entry_points={
         "console_scripts": [
             "epl-launch=epl.utils.launcher:main",
@@ -96,7 +90,7 @@ setup(
     cmdclass={'build': EplBuild, 'clean': EplClean},
     zip_safe=False,
     author='Alibaba Inc.',
-    url='https://yuque.antfin-inc.com/pai-user/manual/intro',
+    url='https://easyparallellibrary.readthedocs.io/en/latest/',
     description=('Easy Parallel Library(EPL) powered by Alibaba.'),
     keywords=['distributed training', 'machine learning', 'tensorflow'],
     extras_require={
@@ -111,17 +105,13 @@ setup(
         ],
     },
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Education',
-        'Intended Audience :: Science/Research',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.8',
         'Operating System :: POSIX :: Linux',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Software Development :: Libraries',
+        'Operating System :: OS Independent',
     ],
     license='Apache 2.0',
 )
