@@ -9,18 +9,19 @@ A user needs to first annotate `local_model.py` with EPL parallelism
 strategies. The following example shows a data parallelism sample by adding
 three lines.
 
-```diff
+
+```python
 # local_model.py
 
 import numpy as np
 import tensorflow as tf
-+ import epl
 
-+ epl.init()
-+ epl.set_default_strategy(epl.replicate(1))
+# EPL annotation
+import epl
+epl.init()
+epl.set_default_strategy(epl.replicate(1))
 
 # Define model
-
 num_x = np.random.randint(0, 10, (500, 20)).astype(dtype=np.float32)
 num_y = np.random.randint(0, 10, 500).astype(dtype=np.int64)
 dataset = tf.data.Dataset.from_tensor_slices((num_x, num_y)).batch(10).repeat(1)
@@ -35,7 +36,6 @@ optimizer = tf.train.MomentumOptimizer(learning_rate=0.001, momentum=0.9)
 train_op = optimizer.minimize(loss, global_step=global_step)
 
 # Training session
-
 with tf.train.MonitoredTrainingSession() as sess:
   for i in range(10):
     train_loss, _, step = sess.run([loss, train_op, global_step])
