@@ -11,12 +11,13 @@ three lines.
 
 
 ```diff
+
 import numpy as np
 import tensorflow as tf
 
-import epl
-epl.init()
-epl.set_default_strategy(epl.replicate(1))
++ import epl
++ epl.init()
++ epl.set_default_strategy(epl.replicate(1))
 
 num_x = np.random.randint(0, 10, (500, 20)).astype(dtype=np.float32)
 num_y = np.random.randint(0, 10, 500).astype(dtype=np.int64)
@@ -36,6 +37,7 @@ with tf.train.MonitoredTrainingSession() as sess:
     train_loss, _, step = sess.run([loss, train_op, global_step])
     print("Iteration %s , Loss: %s ." % (step, train_loss))
 print("Train Finished.")
+
 ```
 
 
